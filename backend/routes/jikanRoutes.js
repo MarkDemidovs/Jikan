@@ -4,10 +4,14 @@ const jikanController = require("../controllers/jikanController");
 
 router.get("/", jikanController.getAllJikans);
 
-//router.post("/", jikanController.addJikan);
+router.get("/:id", jikanController.getJikan);
 
-//router.patch("/:id", jikanController.updateJikan);
+router.post("/users", jikanController.addUser);
 
-//router.delete("/:id", jikanController.deleteJikan);
+router.post("/teams", jikanController.addTeam);
+
+router.post("/teams/:teamId/users/:userId", jikanController.addUserToTeam);
+
+router.post("/events", jikanController.addEvent);
 
 module.exports = router;
