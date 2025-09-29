@@ -5,6 +5,11 @@ const getAllJikans = async () => {
     return result.rows;
 };
 
+const getJikan = async (id) => {
+    const result = await db.query("SELECT * FROM events WHERE id = $1", [id]);
+    return result.rows[0];
+}
 module.exports = {
     getAllJikans,
+    getJikan
 }

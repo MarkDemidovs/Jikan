@@ -6,12 +6,12 @@ router.get("/", jikanController.getAllJikans);
 
 router.get("/:id", jikanController.getJikan);
 
-router.post("/users", jikanController.addUser);
+/*router.post("/users", jikanController.addUser);
 
 router.post("/teams", jikanController.addTeam);
 
 router.post("/teams/:teamId/users/:userId", jikanController.addUserToTeam);
 
-router.post("/events", jikanController.addEvent);
+router.post("/events", jikanController.addEvent);*/
 
 module.exports = router;
