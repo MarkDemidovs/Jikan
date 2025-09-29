@@ -37,9 +37,15 @@ const verifyUser = async ({username, password}) => {
     return {id: user.id, username: user.username};
 }
 
+const createTeam = async ({team_name}) => {
+    const result = await db.query("INSERT INTO teams (team_name) VALUES ($1) RETURNING id, team_name, created_at", [team_name]);
+    return result.rows[0];
+}
+
 module.exports = {
     getAllJikans,
     getJikan,
     addUser,
     verifyUser,
+    createTeam
 }

@@ -55,9 +55,23 @@ const loginUser = async (req,res) => {
  
 }
 
+const addTeam = async (req,res) => {
+    const { team_name } = req.body;
+
+    if (!team_name) return res.status(400).json({error: "Missing team_name required field."});
+
+    try {
+        const newTeam = await jikanModel.createTeam({team_name});
+        res.status(201).json({team: newTeam});
+    } catch (err) {
+        res.status(500).json({error: "Failed to create: " + err.message});
+    }
+}
+
 module.exports = {
     getAllJikans,
     getJikan,
     addUser,
-    loginUser
+    loginUser,
+    addTeam,
 }

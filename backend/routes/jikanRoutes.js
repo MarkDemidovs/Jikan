@@ -10,8 +10,9 @@ router.post("/users", jikanController.addUser);
 
 router.post("/login", jikanController.loginUser);
 
-/*router.post("/teams", jikanController.addTeam);
+router.post("/teams", jikanController.addTeam);
 
+/*
 router.post("/teams/:teamId/users/:userId", jikanController.addUserToTeam);
 
 router.post("/events", jikanController.addEvent);*/
