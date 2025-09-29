@@ -6,9 +6,11 @@ router.get("/", jikanController.getAllJikans);
 
 router.get("/:id", jikanController.getJikan);
 
-/*router.post("/users", jikanController.addUser);
+router.post("/users", jikanController.addUser);
 
-router.post("/teams", jikanController.addTeam);
+router.post("/login", jikanController.loginUser);
+
+/*router.post("/teams", jikanController.addTeam);
 
 router.post("/teams/:teamId/users/:userId", jikanController.addUserToTeam);
 

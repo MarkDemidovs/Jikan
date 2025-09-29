@@ -26,7 +26,38 @@ const getJikan = async (req,res) => {
 
 }
 
+const addUser = async (req,res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({error: "Missing required fields."});
+    }
+
+    try {
+        const newUser = await jikanModel.addUser({username, password});
+        res.status(201).json({ user: newUser });
+    } catch (err) {
+        res.status(500).json({error: "Failed to add jikan: " + err.message});
+    }
+}
+
+const loginUser = async (req,res) => {
+    const {username, password} = req.body;
+    if (!username || !password) return res.status(400).json({error: "Missng required fields."});
+
+    try {
+        const user = await jikanModel.verifyUser({username, password});
+        if (!user) return res.status(401).json({error: "Invalid username or password"});
+        res.json({user});
+    } catch (err) {
+        res.status(500).json({error: "Failed to login: " + err.message});
+    }
+ 
+}
+
 module.exports = {
     getAllJikans,
     getJikan,
+    addUser,
+    loginUser
 }
