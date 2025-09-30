@@ -68,10 +68,30 @@ const addTeam = async (req,res) => {
     }
 }
 
+const addUserToTeam = async (req,res) => {
+    const { teamId, userId } = req.params;
+    
+    try {
+        const membership = await jikanModel.addUserToTeam({
+            teamId,
+            userId,
+        })
+
+        if (!membership) {
+            return res.status(200).json({message : "User already in team."})
+        }
+
+        res.status(201).json({membership});
+
+    } catch (err) {
+        res.status(500).json({error: "failed to add user to team: " + err.message})
+    }
+}
 module.exports = {
     getAllJikans,
     getJikan,
     addUser,
     loginUser,
     addTeam,
+    addUserToTeam,
 }

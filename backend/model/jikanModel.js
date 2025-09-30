@@ -42,10 +42,22 @@ const createTeam = async ({team_name}) => {
     return result.rows[0];
 }
 
+const addUserToTeam = async ({teamId, userId}) => {
+        const query = `
+        INSERT INTO team_members (team_id, account_id)
+        VALUES ($1, $2)
+        ON CONFLICT (team_id, account_id) DO NOTHING
+        RETURNING id, team_id, account_id
+    `;
+
+    const result = await db.query(query, [teamId, userId]);
+    return result.rows[0];
+}
 module.exports = {
     getAllJikans,
     getJikan,
     addUser,
     verifyUser,
-    createTeam
+    createTeam,
+    addUserToTeam,
 }
