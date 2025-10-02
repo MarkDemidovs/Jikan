@@ -101,6 +101,17 @@ const addEvent = async (req,res)=> {
     }
 }
 
+const lookJikans = async (req,res) => {
+    const { teamId } = req.params;
+
+    try {
+        const lookForJikans = await jikanModel.lookJikan({teamId});
+        res.status(201).json({jikans: lookForJikans})
+    } catch (err) {
+        res.status(500).json({error: "failed to look for jikans in a specific team: " + err});
+    }
+}
+
 module.exports = {
     getAllJikans,
     getJikan,
@@ -108,5 +119,6 @@ module.exports = {
     loginUser,
     addTeam,
     addUserToTeam,
-    addEvent 
+    addEvent,
+    lookJikans
 }

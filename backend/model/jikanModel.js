@@ -64,6 +64,21 @@ const createEvent = async ({ event_date, event_name, event_info, team_id }) => {
     return result.rows[0];
 };
 
+const lookJikan = async ({teamId}) => {
+    const query = `SELECT id,
+       event_name,
+       event_date,
+       event_info,
+       created_at
+        FROM events
+        WHERE team_id = ($1) -- replace with actual team_id
+        ORDER BY event_date;
+`
+    const result = await db.query(query, [teamId]);
+
+    return result.rows;
+}
+
 module.exports = {
     getAllJikans,
     getJikan,
@@ -71,5 +86,6 @@ module.exports = {
     verifyUser,
     createTeam,
     addUserToTeam,
-    createEvent
+    createEvent,
+    lookJikan
 }

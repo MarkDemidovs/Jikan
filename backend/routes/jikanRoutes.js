@@ -6,7 +6,7 @@ router.get("/", jikanController.getAllJikans);
 
 router.get("/:id", jikanController.getJikan);
 
-// router.get specific teams jikans
+router.get("/events/:teamId", jikanController.lookJikans);
 
 router.post("/users", jikanController.addUser);
 
