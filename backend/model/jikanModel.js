@@ -53,6 +53,17 @@ const addUserToTeam = async ({teamId, userId}) => {
     const result = await db.query(query, [teamId, userId]);
     return result.rows[0];
 }
+
+const createEvent = async ({ event_date, event_name, event_info, team_id }) => {
+    const result = await db.query(
+        `INSERT INTO events (event_date, event_name, event_info, team_id)
+         VALUES ($1, $2, $3, $4)
+         RETURNING *`,
+        [event_date, event_name, event_info, team_id]
+    );
+    return result.rows[0];
+};
+
 module.exports = {
     getAllJikans,
     getJikan,
@@ -60,4 +71,5 @@ module.exports = {
     verifyUser,
     createTeam,
     addUserToTeam,
+    createEvent
 }

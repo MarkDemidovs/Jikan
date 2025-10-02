@@ -87,6 +87,20 @@ const addUserToTeam = async (req,res) => {
         res.status(500).json({error: "failed to add user to team: " + err.message})
     }
 }
+
+const addEvent = async (req,res)=> {
+    const { event_date, event_name, event_info, team_id  } = req.body;
+
+    if (!event_date || !event_name || !event_info || !team_id) return res.status(400).json({error: "Missing required fields."})
+
+    try {
+        const newEvent = await jikanModel.createEvent({event_date, event_name, event_info, team_id});        
+        res.status(201).json({event: newEvent});
+    } catch (err) {
+        res.status(500).json({error: "failed to add event to team: " + err.message})
+    }
+}
+
 module.exports = {
     getAllJikans,
     getJikan,
@@ -94,4 +108,5 @@ module.exports = {
     loginUser,
     addTeam,
     addUserToTeam,
+    addEvent 
 }
