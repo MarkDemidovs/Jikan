@@ -1,5 +1,6 @@
 const db = require("../db/index");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken")
 
 const getAllJikans = async () => {
     const result = await db.query("SELECT * FROM events");
@@ -34,7 +35,13 @@ const verifyUser = async ({username, password}) => {
     const match = await bcrypt.compare(password, user.password_hash);
     if (!match) return null;
 
-    return {id: user.id, username: user.username};
+    const token = jwt.sign(
+        { id: user.id, username: user.username },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+    );
+
+    return {id: user.id, username: user.username, token};
 }
 
 const createTeam = async ({team_name}) => {
