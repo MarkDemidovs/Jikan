@@ -1,4 +1,5 @@
 const jikanModel = require("../model/jikanModel");
+const jwt = require("jsonwebtoken");
 
 const getAllJikans = async (req,res) => {
     try {
@@ -112,6 +113,19 @@ const lookJikans = async (req,res) => {
     }
 }
 
+const verifyToken = (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) return res.status(401).json({ error: "No token provided" });
+
+    const token = authHeader.split(" ")[1];
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.json({ user: { id: decoded.id, username: decoded.username } });
+    } catch (err) {
+        res.status(401).json({ error: "Invalid or expired token" });
+    }
+};
+
 module.exports = {
     getAllJikans,
     getJikan,
@@ -120,5 +134,6 @@ module.exports = {
     addTeam,
     addUserToTeam,
     addEvent,
-    lookJikans
+    lookJikans,
+    verifyToken,
 }
