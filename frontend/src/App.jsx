@@ -26,6 +26,8 @@ export default function App() {
       await API.post(`/teams/${teamId}/users/${userId}`);
 
       console.log(`User ${user.username} added to team ${teamId}`);
+      setTeams(prev => [...prev, teamRes.data.team]);
+      setSelectedTeamId(teamId);
     } catch (err) {
       setError(err.response?.data?.error || "Failed to create team")
     }

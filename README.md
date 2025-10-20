@@ -4,7 +4,8 @@ JIKAN is a (w.i.p) production-ready solution for keeping track of specific times
 test user - name: dubai p: 123 (dont ask why)
 
 here are the todos:
-    1. team creation
-    2. creating events
+    1. displaying todos
+    2. creating events, adding events
     3. adding people to team on frontend by username
     4. team exit
+    5. db reset
