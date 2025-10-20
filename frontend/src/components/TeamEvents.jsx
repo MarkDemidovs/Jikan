@@ -1,13 +1,5 @@
 import React from "react";
 
-/**
- * Props:
- *  - teams: array of { id, team_name, created_at }
- *  - selectedTeamId: number | null
- *  - onSelectTeam: function(teamId)
- *  - events: array of { id, event_name, event_date, event_info, created_at }
- *  - loadingEvents: boolean
- */
 export default function TeamEvents({ teams = [], selectedTeamId, onSelectTeam, events = [], loadingEvents }) {
   return (
     <div style={{ marginTop: 12 }}>

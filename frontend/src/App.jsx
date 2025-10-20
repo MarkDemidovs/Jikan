@@ -12,6 +12,24 @@ export default function App() {
   const [loadingTeams, setLoadingTeams] = useState(false);
   const [loadingEvents, setLoadingEvents] = useState(false);
   const [error, setError] = useState("");
+  const [customTeam, setCustomTeamName] = useState("");
+
+  const handleCreateTeam = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      setCustomTeamName("");
+      const teamRes = await API.post("/teams", {team_name: customTeam});
+      const teamId = teamRes.data.team.id;
+      const userId = user.id;
+      await API.post(`/teams/${teamId}/users/${userId}`);
+
+      console.log(`User ${user.username} added to team ${teamId}`);
+    } catch (err) {
+      setError(err.response?.data?.error || "Failed to create team")
+    }
+  }
 
   // Verify token on app load
   useEffect(() => {
@@ -127,6 +145,11 @@ export default function App() {
               loadingEvents={loadingEvents}
             />
           )}
+
+          <h3>Create a team:</h3>
+          <form onSubmit={handleCreateTeam}>
+            <input type="text" value={customTeam} onChange={e => setCustomTeamName(e.target.value)} required></input> <button type="submit">Create</button>
+          </form>
         </div>
       )}
     </div>
