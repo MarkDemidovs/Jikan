@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "https://animated-goldfish-69rv4v446p762qq7-3001.app.github.dev/jikans",
+    baseURL: "http://localhost:3001/jikans",
     headers: {
         "Content-Type": "application/json"
     }
