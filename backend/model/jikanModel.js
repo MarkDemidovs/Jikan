@@ -1,6 +1,6 @@
 const db = require("../db/index");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 const getAllJikans = async () => {
     const result = await db.query("SELECT * FROM events");
@@ -13,19 +13,17 @@ const getJikan = async (id) => {
 }
 
 const addUser = async ({ username, password }) => {
-    // password hashing..
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // inserting unto the accounts table.
     const result = await db.query(
-        "INSERT INTO accounts (username, password_hash) VALUES ($1, $2) RETURNING id, username, created_at", [username, hashedPassword]
+        "INSERT INTO accounts (username, password_hash) VALUES ($1, $2) RETURNING id, username, created_at",
+        [username, hashedPassword]
     );
 
     return result.rows[0]; 
 }
 
-// testable user module
 const verifyUser = async ({username, password}) => {
     const result = await db.query("SELECT * FROM accounts WHERE username = $1", [username]);
     const user = result.rows[0];
@@ -50,13 +48,12 @@ const createTeam = async ({team_name}) => {
 }
 
 const addUserToTeam = async ({teamId, userId}) => {
-        const query = `
+    const query = `
         INSERT INTO team_members (team_id, account_id)
         VALUES ($1, $2)
         ON CONFLICT (team_id, account_id) DO NOTHING
         RETURNING id, team_id, account_id
     `;
-
     const result = await db.query(query, [teamId, userId]);
     return result.rows[0];
 }
@@ -78,11 +75,23 @@ const lookJikan = async ({teamId}) => {
        event_info,
        created_at
         FROM events
-        WHERE team_id = ($1) -- replace with actual team_id
+        WHERE team_id = $1
         ORDER BY event_date;
-`
+    `;
     const result = await db.query(query, [teamId]);
+    return result.rows;
+}
 
+// get all teams for a user
+const getUserTeams = async ({ userId }) => {
+    const query = `
+      SELECT t.id, t.team_name, t.created_at
+      FROM teams t
+      JOIN team_members tm ON tm.team_id = t.id
+      WHERE tm.account_id = $1
+      ORDER BY t.created_at;
+    `;
+    const result = await db.query(query, [userId]);
     return result.rows;
 }
 
@@ -94,5 +103,6 @@ module.exports = {
     createTeam,
     addUserToTeam,
     createEvent,
-    lookJikan
+    lookJikan,
+    getUserTeams,
 }
