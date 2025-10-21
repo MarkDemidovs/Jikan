@@ -152,6 +152,31 @@ export default function App() {
           <form onSubmit={handleCreateTeam}>
             <input type="text" value={customTeam} onChange={e => setCustomTeamName(e.target.value)} required></input> <button type="submit">Create</button>
           </form>
+
+          <h3>Create an event</h3>
+          <p>This is based off the team you've currently selected.</p>
+
+          <form>
+            <label htmlFor="titleEvent">Title of event</label>
+            <br></br>
+            <input type="text" name="titleEvent" id="titleEvent" 
+            maxlength="100" placeholder="(Max 100 characters)"
+            />
+
+            <br></br>
+
+            <label htmlFor="titleEvent">Date of event</label>
+            <br></br>
+            <input type="date" name="titleEvent" id="titleEvent" />
+
+            <br></br>
+
+            <label for="event_info">Event Info</label>
+            <br></br>
+            <textarea id="event_info" name="event_info" maxlength="255" placeholder="Optional description (max 255 characters)"></textarea>
+            <br></br><br></br>
+            <button type="submit">Create Event</button>
+          </form>
         </div>
       )}
     </div>
