@@ -104,7 +104,7 @@ export default function App() {
 
     try {
       setCustomTeamName("");
-      const teamRes = await API.post("/teams", {team_name: customTeam});
+      const teamRes = await API.post("/teams", { team_name: customTeam });
       const teamId = teamRes.data.team.id;
       const userId = user.id;
       await API.post(`/teams/${teamId}/users/${userId}`);
@@ -123,11 +123,20 @@ export default function App() {
     setError("");
 
     try {
-      console.log({eventTitle, eventDate, eventInfo})
+      console.log({ eventTitle, eventDate, eventInfo });
+
+      const isoDate = eventDate; // <-- already in correct format!
+
+      await API.post("/events", {
+        event_date: isoDate,
+        event_name: eventTitle,
+        event_info: eventInfo,
+        team_id: selectedTeamId
+      });
     } catch (err) {
-      setError(err.response?.data?.error || "Failed to Create Event.")
+      setError(err.response?.data?.error || "Failed to Create Event.");
     }
-  }
+  };
 
   return (
     <div style={{ padding: 20 }}>
@@ -174,10 +183,10 @@ export default function App() {
           <form onSubmit={handleCreateEvent}>
             <label htmlFor="titleEvent">Title of event</label>
             <br></br>
-            <input type="text" name="titleEvent" id="titleEvent" 
-            maxlength="100" placeholder="(Max 100 characters)"
-            value={eventTitle} onChange={e => setEventTitle(e.target.value)} 
-            required
+            <input type="text" name="titleEvent" id="titleEvent"
+              maxLength="100" placeholder="(Max 100 characters)"
+              value={eventTitle} onChange={e => setEventTitle(e.target.value)}
+              required
             />
 
             <br></br>
@@ -185,14 +194,14 @@ export default function App() {
             <label htmlFor="titleEvent">Date of event</label>
             <br></br>
             <input type="date" name="titleEvent" id="titleEvent"
-            value={eventDate} onChange={e => setEventDate(e.target.value)} required/>
+              value={eventDate} onChange={e => setEventDate(e.target.value)} required />
 
             <br></br>
 
             <label htmlFor="event_info">Event Info</label>
             <br></br>
-            <textarea id="event_info" name="event_info" maxlength="255" placeholder="Optional description (max 255 characters)"
-            value={eventInfo} onChange={e=>setEventInfo(e.target.value)}></textarea>
+            <textarea id="event_info" name="event_info" maxLength="255" placeholder="Optional description (max 255 characters)"
+              value={eventInfo} onChange={e => setEventInfo(e.target.value)}></textarea>
             <br></br><br></br>
             <button type="submit">Create Event</button>
           </form>

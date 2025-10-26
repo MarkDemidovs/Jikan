@@ -1,6 +1,12 @@
 import React from "react";
 
 export default function TeamEvents({ teams = [], selectedTeamId, onSelectTeam, events = [], loadingEvents }) {
+  const parseDate = (str) => {
+    if (!str) return null;
+    const date = new Date(str);
+    return isNaN(date.getTime()) ? null : date;
+  };
+
   return (
     <div style={{ marginTop: 12 }}>
       <label>
@@ -33,18 +39,18 @@ export default function TeamEvents({ teams = [], selectedTeamId, onSelectTeam, e
               </tr>
             </thead>
             <tbody>
-              {events.map(ev => (
-                <tr key={ev.id}>
-                  <td style={{ padding: "8px", borderBottom: "1px solid #f0f0f0" }}>
-                    {ev.event_date
-                      ? new Date(ev.event_date + "T00:00:00").toLocaleDateString()
-                      : new Date(ev.created_at).toLocaleString()
-                    }
-                  </td>
-                  <td style={{ padding: "8px", borderBottom: "1px solid #f0f0f0" }}>{ev.event_name}</td>
-                  <td style={{ padding: "8px", borderBottom: "1px solid #f0f0f0" }}>{ev.event_info}</td>
-                </tr>
-              ))}
+              {events.map(ev => {
+                const parsedDate = parseDate(ev.event_date || ev.created_at);
+                return (
+                  <tr key={ev.id}>
+                    <td style={{ padding: "8px", borderBottom: "1px solid #f0f0f0" }}>
+                      {parsedDate ? parsedDate.toLocaleDateString() : "Invalid Date"}
+                    </td>
+                    <td style={{ padding: "8px", borderBottom: "1px solid #f0f0f0" }}>{ev.event_name}</td>
+                    <td style={{ padding: "8px", borderBottom: "1px solid #f0f0f0" }}>{ev.event_info}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         )}
