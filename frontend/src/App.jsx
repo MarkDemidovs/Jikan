@@ -13,25 +13,9 @@ export default function App() {
   const [loadingEvents, setLoadingEvents] = useState(false);
   const [error, setError] = useState("");
   const [customTeam, setCustomTeamName] = useState("");
-
-  const handleCreateTeam = async (e) => {
-    e.preventDefault();
-    setError("");
-
-    try {
-      setCustomTeamName("");
-      const teamRes = await API.post("/teams", {team_name: customTeam});
-      const teamId = teamRes.data.team.id;
-      const userId = user.id;
-      await API.post(`/teams/${teamId}/users/${userId}`);
-
-      console.log(`User ${user.username} added to team ${teamId}`);
-      setTeams(prev => [...prev, teamRes.data.team]);
-      setSelectedTeamId(teamId);
-    } catch (err) {
-      setError(err.response?.data?.error || "Failed to create team")
-    }
-  }
+  const [eventTitle, setEventTitle] = useState("");
+  const [eventDate, setEventDate] = useState("");
+  const [eventInfo, setEventInfo] = useState("");
 
   // Verify token on app load
   useEffect(() => {
@@ -114,6 +98,37 @@ export default function App() {
     setEvents([]);
   };
 
+  const handleCreateTeam = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      setCustomTeamName("");
+      const teamRes = await API.post("/teams", {team_name: customTeam});
+      const teamId = teamRes.data.team.id;
+      const userId = user.id;
+      await API.post(`/teams/${teamId}/users/${userId}`);
+
+      console.log(`User ${user.username} added to team ${teamId}`);
+      setTeams(prev => [...prev, teamRes.data.team]);
+      setSelectedTeamId(teamId);
+    } catch (err) {
+      setError(err.response?.data?.error || "Failed to create team")
+    }
+  }
+
+
+  const handleCreateEvent = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      console.log({eventTitle, eventDate, eventInfo})
+    } catch (err) {
+      setError(err.response?.data?.error || "Failed to Create Event.")
+    }
+  }
+
   return (
     <div style={{ padding: 20 }}>
       <h2>Welcome to JIKAN testing.</h2>
@@ -156,24 +171,28 @@ export default function App() {
           <h3>Create an event</h3>
           <p>This is based off the team you've currently selected.</p>
 
-          <form>
+          <form onSubmit={handleCreateEvent}>
             <label htmlFor="titleEvent">Title of event</label>
             <br></br>
             <input type="text" name="titleEvent" id="titleEvent" 
             maxlength="100" placeholder="(Max 100 characters)"
+            value={eventTitle} onChange={e => setEventTitle(e.target.value)} 
+            required
             />
 
             <br></br>
 
             <label htmlFor="titleEvent">Date of event</label>
             <br></br>
-            <input type="date" name="titleEvent" id="titleEvent" />
+            <input type="date" name="titleEvent" id="titleEvent"
+            value={eventDate} onChange={e => setEventDate(e.target.value)} required/>
 
             <br></br>
 
-            <label for="event_info">Event Info</label>
+            <label htmlFor="event_info">Event Info</label>
             <br></br>
-            <textarea id="event_info" name="event_info" maxlength="255" placeholder="Optional description (max 255 characters)"></textarea>
+            <textarea id="event_info" name="event_info" maxlength="255" placeholder="Optional description (max 255 characters)"
+            value={eventInfo} onChange={e=>setEventInfo(e.target.value)}></textarea>
             <br></br><br></br>
             <button type="submit">Create Event</button>
           </form>
