@@ -133,6 +133,14 @@ export default function App() {
         event_info: eventInfo,
         team_id: selectedTeamId
       });
+
+      const res = await API.get(`/events/${selectedTeamId}`);
+      const maybeEvents = res.data.jikans ?? res.data.events ?? [];
+      setEvents(maybeEvents);
+
+      setEventTitle("");
+      setEventDate("");
+      setEventInfo("");
     } catch (err) {
       setError(err.response?.data?.error || "Failed to Create Event.");
     }
