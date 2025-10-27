@@ -9,3 +9,5 @@ here are the todos:
     3. adding people to team on frontend by username
     4. team exit
     5. db reset
+
+    just testing git pushes
