@@ -16,4 +16,7 @@ router.post("/teams", jikanController.addTeam);
 router.post("/teams/:teamId/users/:userId", jikanController.addUserToTeam);
 router.post("/events", jikanController.addEvent);
 
+// DELETE routes
+router.delete("/events/:eventId", jikanController.removeEvent);
+
 module.exports = router;

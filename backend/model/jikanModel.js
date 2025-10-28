@@ -95,6 +95,10 @@ const getUserTeams = async ({ userId }) => {
     return result.rows;
 }
 
+const eventDeletion = async ({ eventId }) => {
+    const result = await db.query("DELETE FROM events WHERE id = $1 RETURNING *", [eventId]);
+    return result.rows;
+}
 module.exports = {
     getAllJikans,
     getJikan,
@@ -105,4 +109,5 @@ module.exports = {
     createEvent,
     lookJikan,
     getUserTeams,
+    eventDeletion,
 }

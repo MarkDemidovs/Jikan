@@ -86,16 +86,6 @@ const addEvent = async (req,res)=> {
     }
 }
 
-const lookJikans = async (req,res) => {
-    const { teamId } = req.params;
-    try {
-        const lookForJikans = await jikanModel.lookJikan({teamId});
-        res.status(200).json({jikans: lookForJikans})
-    } catch (err) {
-        res.status(500).json({error: "failed to look for jikans in a specific team: " + err.message});
-    }
-}
-
 // return teams for a given user id
 const getUserTeams = async (req, res) => {
     const { userId } = req.params;
@@ -120,6 +110,28 @@ const verifyToken = (req, res) => {
     }
 };
 
+const lookJikans = async (req,res) => {
+    const { teamId } = req.params;
+    try {
+        const lookForJikans = await jikanModel.lookJikan({teamId});
+        res.status(200).json({jikans: lookForJikans})
+    } catch (err) {
+        res.status(500).json({error: "failed to look for jikans in a specific team: " + err.message});
+    }
+}
+
+
+const removeEvent = async (req,res) => {
+    const { eventId } = req.params;
+
+    try {
+        const deleteEvent = await jikanModel.eventDeletion({eventId});
+        res.status(200).json({jikans_del: deleteEvent});
+    } catch (err) {
+        res.status(500).json({ error: "Failed to delete event: " + err.message });
+    }
+}
+
 module.exports = {
     getAllJikans,
     getJikan,
@@ -131,4 +143,5 @@ module.exports = {
     lookJikans,
     getUserTeams,
     verifyToken,
+    removeEvent
 }
