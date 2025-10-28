@@ -1,7 +1,25 @@
 # JIKAN
 JIKAN is a (w.i.p) production-ready solution for keeping track of specific times and events for people all over the globe.
+Right now, the local version is being built, but plans have been extended to create a full production-ready release.
 
-test user - name: dubai p: 123 (dont ask why)
+## Installation
+### backend
+To install, you must cd to the root of the folder and type
+> npm install
+which will install all of the necesarry files for backend.
+Now you may cd into the backend and type
+> node server.js
+.. to run the backend. You must have a valid local PostgreSQL Installation. You may run the jikanSetup.sql with your favourite PSQL tool, be it CLI, Powershell or the PSQL CLI
+
+### frontnend
+To install, you must cd into the fronend folder and type up this command into the console:
+> npm install
+which will install all of the necesarry files for React.js. 
+Now you may cd into the frontend folder and type up
+> npm run dev
+.. to start running the frontend of the website.
+* YOU MUST HAVE A VALID BACKEND AND A DB TO LOG IN OR SIGN UP!*
+
 
 here are the todos:
     1. Removing events
@@ -10,4 +28,3 @@ here are the todos:
     4. team exit
     5. db reset
 
-    just testing git pushes
