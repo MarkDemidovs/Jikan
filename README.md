@@ -22,9 +22,9 @@ Now you may cd into the frontend folder and type up
 
 
 here are the todos:
-    1. Removing events
-    2. Event Expiry
-    3. adding people to team on frontend by username
-    4. team exit
-    5. db reset
+    1. Event Expiry
+    2. adding people to team on frontend by username
+    3. team exit
+    4. db reset
+    5. good styling
 
