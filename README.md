@@ -22,7 +22,7 @@ Now you may cd into the frontend folder and type up
 
 
 here are the todos:
-    1. Event Expiry
+    1. Event Expiry with next-day verification peer-to-peer.
     2. adding people to team on frontend by username
     3. team exit
     4. db reset
