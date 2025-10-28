@@ -22,7 +22,7 @@ export default function App() {
     const token = localStorage.getItem("token");
     if (token) {
       API.get("/verify")
-        .then(res => {
+        .then((res) => {
           setUser(res.data.user);
         })
         .catch(() => {
@@ -110,13 +110,12 @@ export default function App() {
       await API.post(`/teams/${teamId}/users/${userId}`);
 
       console.log(`User ${user.username} added to team ${teamId}`);
-      setTeams(prev => [...prev, teamRes.data.team]);
+      setTeams((prev) => [...prev, teamRes.data.team]);
       setSelectedTeamId(teamId);
     } catch (err) {
-      setError(err.response?.data?.error || "Failed to create team")
+      setError(err.response?.data?.error || "Failed to create team");
     }
-  }
-
+  };
 
   const handleCreateEvent = async (e) => {
     e.preventDefault();
@@ -131,7 +130,7 @@ export default function App() {
         event_date: isoDate,
         event_name: eventTitle,
         event_info: eventInfo,
-        team_id: selectedTeamId
+        team_id: selectedTeamId,
       });
 
       const res = await API.get(`/events/${selectedTeamId}`);
@@ -143,6 +142,23 @@ export default function App() {
       setEventInfo("");
     } catch (err) {
       setError(err.response?.data?.error || "Failed to Create Event.");
+    }
+  };
+
+  const handleDeleteEvent = async (eventId) => {
+    if (!window.confirm("Are you sure you want to delete this event?")) return;
+    setError("");
+
+    try {
+      await API.delete(`/events/${eventId}`);
+      console.log(`Deleted event ${eventId}`);
+
+      const res = await API.get(`/events/${selectedTeamId}`);
+      const maybeEvents = res.data.jikans ?? res.data.events ?? [];
+      setEvents(maybeEvents);
+    } catch (err) {
+      console.error("Delete error:", err);
+      setError(err.response?.data?.error || "Failed to delete event");
     }
   };
 
@@ -169,7 +185,10 @@ export default function App() {
           {loadingTeams ? (
             <p>Loading teams...</p>
           ) : teams.length === 0 ? (
-            <p>You are not in any team yet. Create a team or have an admin add you.</p>
+            <p>
+              You are not in any team yet. Create a team or have an admin add
+              you.
+            </p>
           ) : (
             <TeamEvents
               teams={teams}
@@ -177,12 +196,20 @@ export default function App() {
               onSelectTeam={setSelectedTeamId}
               events={events}
               loadingEvents={loadingEvents}
+              onDeleteEvent={handleDeleteEvent}
+
             />
           )}
 
           <h3>Create a team:</h3>
           <form onSubmit={handleCreateTeam}>
-            <input type="text" value={customTeam} onChange={e => setCustomTeamName(e.target.value)} required></input> <button type="submit">Create</button>
+            <input
+              type="text"
+              value={customTeam}
+              onChange={(e) => setCustomTeamName(e.target.value)}
+              required
+            ></input>{" "}
+            <button type="submit">Create</button>
           </form>
 
           <h3>Create an event</h3>
@@ -191,9 +218,14 @@ export default function App() {
           <form onSubmit={handleCreateEvent}>
             <label htmlFor="titleEvent">Title of event</label>
             <br></br>
-            <input type="text" name="titleEvent" id="titleEvent"
-              maxLength="100" placeholder="(Max 100 characters)"
-              value={eventTitle} onChange={e => setEventTitle(e.target.value)}
+            <input
+              type="text"
+              name="titleEvent"
+              id="titleEvent"
+              maxLength="100"
+              placeholder="(Max 100 characters)"
+              value={eventTitle}
+              onChange={(e) => setEventTitle(e.target.value)}
               required
             />
 
@@ -201,16 +233,29 @@ export default function App() {
 
             <label htmlFor="titleEvent">Date of event</label>
             <br></br>
-            <input type="date" name="titleEvent" id="titleEvent"
-              value={eventDate} onChange={e => setEventDate(e.target.value)} required />
+            <input
+              type="date"
+              name="titleEvent"
+              id="titleEvent"
+              value={eventDate}
+              onChange={(e) => setEventDate(e.target.value)}
+              required
+            />
 
             <br></br>
 
             <label htmlFor="event_info">Event Info</label>
             <br></br>
-            <textarea id="event_info" name="event_info" maxLength="255" placeholder="Optional description (max 255 characters)"
-              value={eventInfo} onChange={e => setEventInfo(e.target.value)}></textarea>
-            <br></br><br></br>
+            <textarea
+              id="event_info"
+              name="event_info"
+              maxLength="255"
+              placeholder="Optional description (max 255 characters)"
+              value={eventInfo}
+              onChange={(e) => setEventInfo(e.target.value)}
+            ></textarea>
+            <br></br>
+            <br></br>
             <button type="submit">Create Event</button>
           </form>
         </div>
