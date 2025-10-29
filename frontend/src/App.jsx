@@ -16,6 +16,7 @@ export default function App() {
   const [eventTitle, setEventTitle] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [eventInfo, setEventInfo] = useState("");
+  const [teamSettingsEnabled, setTeamSettingsEnabled] = useState(false);
 
   // Verify token on app load
   useEffect(() => {
@@ -162,6 +163,9 @@ export default function App() {
     }
   };
 
+  const doTeamActions = () => 
+    setTeamSettingsEnabled(!teamSettingsEnabled)
+
   return (
     <div style={{ padding: 20 }}>
       <h2>Welcome to JIKAN testing.</h2>
@@ -212,9 +216,15 @@ export default function App() {
             <button type="submit">Create</button>
           </form>
 
+          <br></br>
+            
+          <button onClick={doTeamActions}>Team Actions</button>
+
+
+          {teamSettingsEnabled ? (<>
           <h3>Create an event</h3>
           <p>This is based off the team you've currently selected.</p>
-
+          
           <form onSubmit={handleCreateEvent}>
             <label htmlFor="titleEvent">Title of event</label>
             <br></br>
@@ -258,6 +268,8 @@ export default function App() {
             <br></br>
             <button type="submit">Create Event</button>
           </form>
+          </>) : (<>
+          </>)}
         </div>
       )}
     </div>
