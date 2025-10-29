@@ -29,4 +29,4 @@ here are the todos:
     5. good styling!
 
 what did i learn from this:
-    1. that i seriously forgot about prop functions..
+    1. that i seriously forgot about prop functions.. so now most of the code is in one file. I may add an issue to github for this.

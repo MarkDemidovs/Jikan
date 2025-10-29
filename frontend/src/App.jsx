@@ -166,6 +166,17 @@ export default function App() {
   const doTeamActions = () => 
     setTeamSettingsEnabled(!teamSettingsEnabled)
 
+  const handleAddToTeam = async () => {
+
+    // CONTINUE HERE FRONTEND FOR THE FRONTEND PART!!
+    try {
+      const res = await API.post(`/teams/${selectedTeamId}/users/${TBA}`)
+    } catch (err) {
+      console.error("Add to team error:", err);
+      setError(err.response?.data?.error || "Failed to add person to team.")
+    }
+  }
+
   return (
     <div style={{ padding: 20 }}>
       <h2>Welcome to JIKAN testing.</h2>
@@ -212,12 +223,14 @@ export default function App() {
               value={customTeam}
               onChange={(e) => setCustomTeamName(e.target.value)}
               required
+              placeholder="Enter the name of the new team."
+              id="teamInput"
             ></input>{" "}
             <button type="submit">Create</button>
           </form>
 
           <br></br>
-            
+
           <button onClick={doTeamActions}>Team Actions</button>
 
 
@@ -238,6 +251,7 @@ export default function App() {
               onChange={(e) => setEventTitle(e.target.value)}
               required
             />
+            
 
             <br></br>
 
@@ -267,6 +281,14 @@ export default function App() {
             <br></br>
             <br></br>
             <button type="submit">Create Event</button>
+          </form>
+          <br></br>
+          <hr></hr>
+          <form onSubmit={handleAddToTeam}>
+            <h3>Add person to team</h3>
+            <label htmlFor="personInput" id="personLabel">The person you submit will be added to the current team you've selected.</label> <br></br>
+            <input type="text" name="personInput" id="personInput" placeholder="Enter the username of the person you want to add." required/>
+            <button type="submit">Add Person</button>
           </form>
           </>) : (<>
           </>)}

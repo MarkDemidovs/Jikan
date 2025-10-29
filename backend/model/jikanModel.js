@@ -47,17 +47,6 @@ const createTeam = async ({team_name}) => {
     return result.rows[0];
 }
 
-const addUserToTeam = async ({teamId, userId}) => {
-    const query = `
-        INSERT INTO team_members (team_id, account_id)
-        VALUES ($1, $2)
-        ON CONFLICT (team_id, account_id) DO NOTHING
-        RETURNING id, team_id, account_id
-    `;
-    const result = await db.query(query, [teamId, userId]);
-    return result.rows[0];
-}
-
 const createEvent = async ({ event_date, event_name, event_info, team_id }) => {
     const result = await db.query(
         `INSERT INTO events (event_date, event_name, event_info, team_id)
@@ -99,6 +88,38 @@ const eventDeletion = async ({ eventId }) => {
     const result = await db.query("DELETE FROM events WHERE id = $1 RETURNING *", [eventId]);
     return result.rows;
 }
+
+const addUserToTeam = async ({teamId, userId}) => {
+    const query = `
+        INSERT INTO team_members (team_id, account_id)
+        VALUES ($1, $2)
+        ON CONFLICT (team_id, account_id) DO NOTHING
+        RETURNING id, team_id, account_id
+    `;
+    const result = await db.query(query, [teamId, userId]);
+    return result.rows[0];
+}
+
+const addNamedUserToTeam = async ({ teamId, username }) => {
+    const query = `
+        SELECT id FROM ACCOUNTS
+        WHERE username = $1
+        RETURNING id 
+    `
+
+    const result = await db.query(query, [username]);
+
+    const query1 = `
+        INSERT INTO team_members (team_id, account_id)
+        VALUES ($1, $2)
+        ON CONFLIC (team_id, account_id) DO NOTHING
+        RETURNING id, team _Id, account_id
+    `
+    const result1 = await db.query(query1, [teamId, result]);
+    return result1.rows[0];
+
+    
+}
 module.exports = {
     getAllJikans,
     getJikan,
@@ -110,4 +131,5 @@ module.exports = {
     lookJikan,
     getUserTeams,
     eventDeletion,
+    addNamedUserToTeam
 }

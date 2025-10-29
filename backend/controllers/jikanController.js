@@ -59,21 +59,6 @@ const addTeam = async (req,res) => {
     }
 }
 
-const addUserToTeam = async (req,res) => {
-    const { teamId, userId } = req.params;
-    try {
-        const membership = await jikanModel.addUserToTeam({
-            teamId,
-            userId,
-        })
-        if (!membership) {
-            return res.status(200).json({message : "User already in team."})
-        }
-        res.status(201).json({membership});
-    } catch (err) {
-        res.status(500).json({error: "failed to add user to team: " + err.message})
-    }
-}
 
 const addEvent = async (req,res)=> {
     const { event_date, event_name, event_info, team_id  } = req.body;
@@ -132,6 +117,41 @@ const removeEvent = async (req,res) => {
     }
 }
 
+const addUserToTeam = async (req,res) => {
+    const { teamId, userId } = req.params;
+    try {
+        const membership = await jikanModel.addUserToTeam({
+            teamId,
+            userId,
+        })
+        if (!membership) {
+            return res.status(200).json({message : "User already in team."})
+        }
+        res.status(201).json({membership});
+    } catch (err) {
+        res.status(500).json({error: "failed to add user to team: " + err.message})
+    }
+}
+
+const addNamedUserToTeam = async (req,res) => {
+    const { teamId } = req.params;
+    const { username } = req.body;
+
+    try {
+        const membership = await jikanModel.addNamedUserToTeam({
+            teamId,
+            username
+        })
+
+        if(!membership) {
+            return res.status(200).json({message: "Named user already in team."});
+        }
+        res.status(201).json({membership});
+    } catch (err) {
+        res.status(500).json({error: "failed to add named user to team: " + err.message})
+    }
+
+}
 module.exports = {
     getAllJikans,
     getJikan,
@@ -143,5 +163,6 @@ module.exports = {
     lookJikans,
     getUserTeams,
     verifyToken,
-    removeEvent
+    removeEvent,
+    addNamedUserToTeam,
 }
