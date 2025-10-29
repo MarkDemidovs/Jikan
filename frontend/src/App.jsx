@@ -17,6 +17,7 @@ export default function App() {
   const [eventDate, setEventDate] = useState("");
   const [eventInfo, setEventInfo] = useState("");
   const [teamSettingsEnabled, setTeamSettingsEnabled] = useState(false);
+  const [addablePerson, setAddablePerson] = useState("");
 
   // Verify token on app load
   useEffect(() => {
@@ -166,11 +167,14 @@ export default function App() {
   const doTeamActions = () => 
     setTeamSettingsEnabled(!teamSettingsEnabled)
 
-  const handleAddToTeam = async () => {
-
-    // CONTINUE HERE FRONTEND FOR THE FRONTEND PART!!
+  const handleAddToTeam = async (e) => {
+    e.preventDefault();
     try {
-      const res = await API.post(`/teams/${selectedTeamId}/users/${TBA}`)
+      await API.post(`/team/${selectedTeamId}/users/`, {
+        username: addablePerson
+      });
+
+      setAddablePerson("");
     } catch (err) {
       console.error("Add to team error:", err);
       setError(err.response?.data?.error || "Failed to add person to team.")
@@ -287,8 +291,9 @@ export default function App() {
           <form onSubmit={handleAddToTeam}>
             <h3>Add person to team</h3>
             <label htmlFor="personInput" id="personLabel">The person you submit will be added to the current team you've selected.</label> <br></br>
-            <input type="text" name="personInput" id="personInput" placeholder="Enter the username of the person you want to add." required/>
-            <button type="submit">Add Person</button>
+            <input type="text" name="personInput" id="personInput" placeholder="Enter the username of the person you want to add."
+             required value={addablePerson} onChange={(e) => setAddablePerson(e.target.value)}/>
+            <button onClick={handleAddToTeam}>Add Person</button>
           </form>
           </>) : (<>
           </>)}

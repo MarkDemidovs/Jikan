@@ -101,22 +101,16 @@ const addUserToTeam = async ({teamId, userId}) => {
 }
 
 const addNamedUserToTeam = async ({ teamId, username }) => {
-    const query = `
-        SELECT id FROM ACCOUNTS
-        WHERE username = $1
-        RETURNING id 
-    `
 
-    const result = await db.query(query, [username]);
+    const result = await db.query("SELECT id FROM accounts WHERE username = $1", [username]);
 
     const query1 = `
         INSERT INTO team_members (team_id, account_id)
         VALUES ($1, $2)
-        ON CONFLIC (team_id, account_id) DO NOTHING
-        RETURNING id, team _Id, account_id
+        ON CONFLICT (team_id, account_id) DO NOTHING
     `
-    const result1 = await db.query(query1, [teamId, result]);
-    return result1.rows[0];
+    await db.query(query1, [teamId, result.rows[0].id]);
+    return result.rows[0];
 
     
 }
