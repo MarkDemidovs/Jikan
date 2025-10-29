@@ -22,9 +22,11 @@ Now you may cd into the frontend folder and type up
 
 
 here are the todos:
-    1. Event Expiry with next-day verification peer-to-peer.
-    2. adding people to team on frontend by username
+    1. adding people to team on frontend by username
+    2. Event Expiry with next-day verification peer-to-peer.
     3. team exit
     4. db reset
-    5. good styling
+    5. good styling!
 
+what did i learn from this:
+    1. that i seriously forgot about prop functions..
