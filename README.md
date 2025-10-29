@@ -1,32 +1,99 @@
-# JIKAN
-JIKAN is a (w.i.p) production-ready solution for keeping track of specific times and events for people all over the globe.
-Right now, the local version is being built, but plans have been extended to create a full production-ready release.
+# JIKAN ⏰
+
+JIKAN is a collaborative event management system designed to help teams keep track of events and schedules across different time zones. Currently in development, with plans for a full production release.
+
+## Features
+
+- 🔐 User authentication and authorization
+- 👥 Team management and collaboration
+- 📅 Event scheduling and tracking
+- 🌐 Multi-team support
+- ⚡ Real-time event updates
+- 🗑️ Automatic cleanup of past events
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+- Node.js (v14 or higher)
+- PostgreSQL (v13 or higher)
+- npm (v6 or higher)
 
 ## Installation
-### backend
-To install, you must cd to the root of the folder and type
-> npm install
-which will install all of the necesarry files for backend.
-Now you may cd into the backend and type
-> node server.js
-.. to run the backend. You must have a valid local PostgreSQL Installation. You may run the jikanSetup.sql with your favourite PSQL tool, be it CLI, Powershell or the PSQL CLI
 
-### frontnend
-To install, you must cd into the fronend folder and type up this command into the console:
-> npm install
-which will install all of the necesarry files for React.js. 
-Now you may cd into the frontend folder and type up
-> npm run dev
-.. to start running the frontend of the website.
-* YOU MUST HAVE A VALID BACKEND AND A DB TO LOG IN OR SIGN UP!*
+### Database Setup
+1. Install PostgreSQL if you haven't already
+2. Run the setup script:
+   ```sql
+   psql -f jikanSetup.sql
+   ```
 
+### Backend Setup
+1. Navigate to the project root:
+   ```bash
+   cd backend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a .env file with your configuration:
+   ```
+   PORT=3001
+   DB_PORT=5432
+   DB_USER=your_username
+   DB_HOST=localhost
+   DB_NAME=jikan
+   DB_PASSWORD=your_password
+   JWT_SECRET=your_secret_key
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-here are the todos:
-    1. Event Expiry with next-day verification peer-to-peer.
-    2. team exit
-    3. db reset
-    4. good styling!
-    5. extend to hours (from-to)
+### Frontend Setup
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-what did i learn from this:
-    1. that i seriously forgot about prop functions.. so now most of the code is in one file. I may add an issue to github for this.
+## Development Roadmap
+
+### Current Tasks
+- [ ] Team exit functionality
+- [ ] Enhanced UI/UX styling
+- [ ] Extended time range support (from-to hours)
+- [ ] Full table reset.
+
+### Future Enhancements
+- [ ] Time zone support
+- [ ] Event notifications
+- [ ] Mobile responsive design
+- [ ] Team calendar view
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Development Notes
+
+### Known Issues
+1. Most code currently resides in a single file - needs refactoring
+2. Missing proper component separation
+3. Requires better state management implementation
+
+## License
+
+This project is licensed under the BSD-3-Clause License - see the LICENSE file for details.
