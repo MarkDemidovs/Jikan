@@ -6,12 +6,13 @@ export default function TeamEvents({
   onSelectTeam,
   events = [],
   loadingEvents,
-  onDeleteEvent
+  onDeleteEvent,
 }) {
   const parseDate = (str) => {
     if (!str) return null;
     const date = new Date(str);
     return isNaN(date.getTime()) ? null : date;
+    
   };
 
   return (

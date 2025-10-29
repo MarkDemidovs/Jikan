@@ -78,9 +78,9 @@ export default function App() {
       setError("");
       try {
         const res = await API.get(`/events/${selectedTeamId}`);
-        // controller returns { jikans: [...] } for events
         const maybeEvents = res.data.jikans ?? res.data.events ?? [];
         setEvents(maybeEvents);
+
       } catch (err) {
         setError(err.response?.data?.error || "Failed to fetch events");
         setEvents([]);
@@ -164,22 +164,23 @@ export default function App() {
     }
   };
 
-  const doTeamActions = () => 
-    setTeamSettingsEnabled(!teamSettingsEnabled)
+  const doTeamActions = () => setTeamSettingsEnabled(!teamSettingsEnabled);
 
   const handleAddToTeam = async (e) => {
     e.preventDefault();
     try {
-      await API.post(`/team/${selectedTeamId}/users/`, {
-        username: addablePerson
+      await API.post(`/team/${selectedTeamId}/users`, {
+        username: addablePerson,
       });
 
       setAddablePerson("");
     } catch (err) {
       console.error("Add to team error:", err);
-      setError(err.response?.data?.error || "Failed to add person to team.")
+      setError(err.response?.data?.error || "Failed to add person to team.");
     }
-  }
+  };
+
+
 
   return (
     <div style={{ padding: 20 }}>
@@ -216,7 +217,6 @@ export default function App() {
               events={events}
               loadingEvents={loadingEvents}
               onDeleteEvent={handleDeleteEvent}
-
             />
           )}
 
@@ -237,66 +237,78 @@ export default function App() {
 
           <button onClick={doTeamActions}>Team Actions</button>
 
+          {teamSettingsEnabled ? (
+            <>
+              <h3>Create an event</h3>
+              <p>This is based off the team you've currently selected.</p>
 
-          {teamSettingsEnabled ? (<>
-          <h3>Create an event</h3>
-          <p>This is based off the team you've currently selected.</p>
-          
-          <form onSubmit={handleCreateEvent}>
-            <label htmlFor="titleEvent">Title of event</label>
-            <br></br>
-            <input
-              type="text"
-              name="titleEvent"
-              id="titleEvent"
-              maxLength="100"
-              placeholder="(Max 100 characters)"
-              value={eventTitle}
-              onChange={(e) => setEventTitle(e.target.value)}
-              required
-            />
-            
+              <form onSubmit={handleCreateEvent}>
+                <label htmlFor="titleEvent">Title of event</label>
+                <br></br>
+                <input
+                  type="text"
+                  name="titleEvent"
+                  id="titleEvent"
+                  maxLength="100"
+                  placeholder="(Max 100 characters)"
+                  value={eventTitle}
+                  onChange={(e) => setEventTitle(e.target.value)}
+                  required
+                />
 
-            <br></br>
+                <br></br>
 
-            <label htmlFor="titleEvent">Date of event</label>
-            <br></br>
-            <input
-              type="date"
-              name="titleEvent"
-              id="titleEvent"
-              value={eventDate}
-              onChange={(e) => setEventDate(e.target.value)}
-              required
-            />
+                <label htmlFor="titleEvent">Date of event</label>
+                <br></br>
+                <input
+                  type="date"
+                  name="titleEvent"
+                  id="titleEvent"
+                  value={eventDate}
+                  onChange={(e) => setEventDate(e.target.value)}
+                  required
+                />
 
-            <br></br>
+                <br></br>
 
-            <label htmlFor="event_info">Event Info</label>
-            <br></br>
-            <textarea
-              id="event_info"
-              name="event_info"
-              maxLength="255"
-              placeholder="Optional description (max 255 characters)"
-              value={eventInfo}
-              onChange={(e) => setEventInfo(e.target.value)}
-            ></textarea>
-            <br></br>
-            <br></br>
-            <button type="submit">Create Event</button>
-          </form>
-          <br></br>
-          <hr></hr>
-          <form onSubmit={handleAddToTeam}>
-            <h3>Add person to team</h3>
-            <label htmlFor="personInput" id="personLabel">The person you submit will be added to the current team you've selected.</label> <br></br>
-            <input type="text" name="personInput" id="personInput" placeholder="Enter the username of the person you want to add."
-             required value={addablePerson} onChange={(e) => setAddablePerson(e.target.value)}/>
-            <button onClick={handleAddToTeam}>Add Person</button>
-          </form>
-          </>) : (<>
-          </>)}
+                <label htmlFor="event_info">Event Info</label>
+                <br></br>
+                <textarea
+                  id="event_info"
+                  name="event_info"
+                  maxLength="255"
+                  placeholder="Optional description (max 255 characters)"
+                  value={eventInfo}
+                  onChange={(e) => setEventInfo(e.target.value)}
+                ></textarea>
+                <br></br>
+                <br></br>
+                <button type="submit">Create Event</button>
+              </form>
+              <br></br>
+              <hr></hr>
+              <form onSubmit={handleAddToTeam}>
+                <h3>Add person to team</h3>
+                <label htmlFor="personInput" id="personLabel">
+                  The person you submit will be added to the current team you've
+                  selected.
+                </label>{" "}
+                <br></br>
+                <input
+                  type="text"
+                  name="personInput"
+                  id="personInput"
+                  placeholder="Enter the username of the person you want to add."
+                  required
+                  value={addablePerson}
+                  onChange={(e) => setAddablePerson(e.target.value)}
+                />
+                <button onClick={handleAddToTeam}>Add Person</button>
+              </form>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       )}
     </div>

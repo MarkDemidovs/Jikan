@@ -26,6 +26,7 @@ here are the todos:
     2. team exit
     3. db reset
     4. good styling!
+    5. extend to hours (from-to)
 
 what did i learn from this:
     1. that i seriously forgot about prop functions.. so now most of the code is in one file. I may add an issue to github for this.
