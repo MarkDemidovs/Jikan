@@ -1,6 +1,8 @@
 # JIKAN ⏰
 
-JIKAN is a collaborative event management system designed to help teams keep track of events and schedules across different time zones. Currently in development, with plans for a full production release.
+JIKAN is a collaborative event management system designed to help teams and groups keep track of events and schedules across different time zones. 
+
+Currently, JIKAN in development, with plans for a full production release once the current tasks are completed.
 
 ## Features
 
