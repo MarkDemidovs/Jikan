@@ -7,6 +7,7 @@ export default function TeamEvents({
   events = [],
   loadingEvents,
   onDeleteEvent,
+  leaveTeam,
 }) {
   const parseDate = (str) => {
     if (!str) return null;
@@ -33,6 +34,8 @@ export default function TeamEvents({
           ))}
         </select>
       </label>
+      <button onClick={leaveTeam}>Leave
+      </button>
 
       <div style={{ marginTop: 16 }}>
         {loadingEvents ? (

@@ -50,9 +50,9 @@ Before you begin, ensure you have the following installed:
    ```
 4. Start the development server:
    ```bash
-   npm run dev
+   node server.js
    ```
-
+   in the backend folder.
 ### Frontend Setup
 1. Navigate to the frontend directory:
    ```bash

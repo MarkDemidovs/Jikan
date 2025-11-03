@@ -129,6 +129,22 @@ const addNamedUserToTeam = async ({ teamId, username }) => {
   await db.query(query1, [teamId, result.rows[0].id]);
   return result.rows[0];
 };
+
+const removeUsernameFromTeam = async ({ username, teamId }) => {
+  const userRes = await db.query("SELECT id FROM accounts WHERE username = $1", [
+    username,
+  ]);
+  const user = userRes.rows[0];
+  if (!user) return null;
+
+  const query = `
+        DELETE FROM team_members 
+        WHERE team_id = $1 AND account_id = $2
+        RETURNING id, team_id, account_id
+    `;
+  const result = await db.query(query, [teamId, user.id]);
+  return result.rows[0];
+};
 module.exports = {
   getAllJikans,
   getJikan,
@@ -141,4 +157,5 @@ module.exports = {
   getUserTeams,
   eventDeletion,
   addNamedUserToTeam,
+  removeUsernameFromTeam
 };

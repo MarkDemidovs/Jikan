@@ -152,6 +152,17 @@ const addNamedUserToTeam = async (req,res) => {
     }
 
 }
+const removeUserFromTeam = async (req,res) => {
+    const { teamId } = req.params;
+    const { username } = req.body;
+
+    try {
+        const removal = await jikanModel.removeUsernameFromTeam({ username, teamId });
+        res.status(200).json({ message: "User removed from team.", removal });
+    } catch (err) {
+        res.status(500).json({ error: "Failed to remove user from team: " + err.message });
+    }
+}
 module.exports = {
     getAllJikans,
     getJikan,
@@ -165,4 +176,5 @@ module.exports = {
     verifyToken,
     removeEvent,
     addNamedUserToTeam,
+    removeUserFromTeam
 }

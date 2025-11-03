@@ -180,6 +180,18 @@ export default function App() {
     }
   };
 
+  const leaveTeam = async (e) => {
+    e.preventDefault();
+    try {
+      await API.delete(`/users/teams/${selectedTeamId}`, {
+        username: user,
+      });
+      
+    } catch (err) {
+      console.error("Leave team error:", err);
+      setError(err.response?.data?.error || "Failed to leave team.");
+    }
+  }
 
 
   return (
@@ -217,6 +229,7 @@ export default function App() {
               events={events}
               loadingEvents={loadingEvents}
               onDeleteEvent={handleDeleteEvent}
+              leaveTeam={leaveTeam}
             />
           )}
 
