@@ -184,9 +184,18 @@ export default function App() {
     e.preventDefault();
     try {
       await API.delete(`/users/teams/${selectedTeamId}`, {
-        username: user,
+        data: { username: user.username }  // <-- Fix: send username in data field
       });
-      
+
+      // Refresh teams after leaving
+      const res = await API.get(`/teams/user/${user.id}`);
+      setTeams(res.data.teams || []);
+      if ((res.data.teams || []).length > 0) {
+        setSelectedTeamId(res.data.teams[0].id);
+      } else {
+        setSelectedTeamId(null);
+        setEvents([]);
+      }
     } catch (err) {
       console.error("Leave team error:", err);
       setError(err.response?.data?.error || "Failed to leave team.");
