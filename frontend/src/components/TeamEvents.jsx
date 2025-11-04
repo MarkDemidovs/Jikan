@@ -34,7 +34,7 @@ export default function TeamEvents({
           ))}
         </select>
       </label>
-      <button onClick={leaveTeam}>Leave
+      <button onClick={leaveTeam}>去 Leave
       </button>
 
       <div style={{ marginTop: 16 }}>

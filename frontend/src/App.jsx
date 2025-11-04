@@ -215,8 +215,8 @@ export default function App() {
       ) : (
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <h2>Welcome, {user.username}</h2>
-            <button onClick={handleLogout}>Logout</button>
+            <h2>ようこそ, {user.username}!</h2>
+            <button onClick={handleLogout}>出 Log-out</button>
           </div>
 
           <h3>Here are the events:</h3>
@@ -252,12 +252,12 @@ export default function App() {
               placeholder="Enter the name of the new team."
               id="teamInput"
             ></input>{" "}
-            <button type="submit">Create</button>
+            <button type="submit">作 Create</button>
           </form>
 
           <br></br>
 
-          <button onClick={doTeamActions}>Team Actions</button>
+          <button onClick={doTeamActions}>団動 Team Actions</button>
 
           {teamSettingsEnabled ? (
             <>
@@ -305,7 +305,7 @@ export default function App() {
                 ></textarea>
                 <br></br>
                 <br></br>
-                <button type="submit">Create Event</button>
+                <button type="submit">作事 Create Event</button>
               </form>
               <br></br>
               <hr></hr>
@@ -325,7 +325,7 @@ export default function App() {
                   value={addablePerson}
                   onChange={(e) => setAddablePerson(e.target.value)}
                 />
-                <button onClick={handleAddToTeam}>Add Person</button>
+                <button onClick={handleAddToTeam}>加人 Add Person</button>
               </form>
             </>
           ) : (
