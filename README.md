@@ -70,7 +70,7 @@ Before you begin, ensure you have the following installed:
 ## Development Roadmap
 
 ### Current Tasks
-- [ ] Team exit functionality
+- [✅] Team exit functionality
 - [ ] Enhanced UI/UX styling
 - [ ] Extended time range support (from-to hours)
 - [ ] Full table reset.
