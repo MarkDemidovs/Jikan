@@ -1,3 +1,7 @@
+* {
+    font-family: monospace, sans-serif;
+}
+
 #personInput {
     width: 350px;
 }
