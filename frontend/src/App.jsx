@@ -202,6 +202,10 @@ export default function App() {
       setError(err.response?.data?.error || "Failed to leave team.");
     }
   }
+  
+  const doCreateTeam = () => {
+    setCreateTeam(!createTeam);
+  }
 
 
   return (
@@ -225,7 +229,6 @@ export default function App() {
           </div>
 
           <h3>Here are the events:</h3>
-
           {error && <p style={{ color: "red" }}>{error}</p>}
 
           {loadingTeams ? (
@@ -251,8 +254,8 @@ export default function App() {
           <br></br>
 
           <button onClick={doTeamActions}>団動 Team Actions</button>
-          <button>団創 Create a team</button>
-          {setCreateTeam ? (
+          <button onClick={doCreateTeam}>団創 Create a team</button>
+          {createTeam ? (
             <>
                         <div id="createTeamSection">
             <h3>Create a team:</h3>
