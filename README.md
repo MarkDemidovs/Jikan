@@ -74,6 +74,7 @@ Before you begin, ensure you have the following installed:
 - [✅] Enhanced Textual Styling
 - [✅] Enhanced UI/UX styling
 - [ ] Extended time range support (from-to hours)
+- [ ] Sanitizing.
 - [ ] Full table reset.
 
 ### Future Enhancements
