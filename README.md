@@ -72,7 +72,7 @@ Before you begin, ensure you have the following installed:
 ### Current Tasks
 - [✅] Team exit functionality
 - [✅] Enhanced Textual Styling
-- [ ] Enhanced UI/UX styling
+- [✅] Enhanced UI/UX styling
 - [ ] Extended time range support (from-to hours)
 - [ ] Full table reset.
 

@@ -224,7 +224,7 @@ export default function App() {
       ) : (
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <h2>ようこそ, {user.username}!</h2>
+            <h2 id="greetingTitle">ようこそ, {user.username}!</h2>
             <button onClick={handleLogout}>出 Log-out</button>
           </div>
 
