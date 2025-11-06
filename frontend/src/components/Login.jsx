@@ -21,7 +21,7 @@ export default function Login({ onLogin }) {
 
     return (
         <div>
-            <h2>Login</h2>
+            <h2>Log in</h2>
             {error && <p style={{ color: "red" }}>{error}</p>}
             <form onSubmit={handleLogin}>
                 <input

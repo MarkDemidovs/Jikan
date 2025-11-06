@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Stack+Sans+Headline:wght@200..700&display=swap');
+
 * {
-    font-family: monospace, sans-serif;
+    font-family: "Stack Sans Headline", sans-serif;
 }
 
 #personInput {
@@ -10,3 +12,36 @@
     width: 200px
 }
 
+body {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    background-color: #212226;
+    border: 0;
+    color: #e6e6e6;
+}
+
+nav h2 {
+    border: 0;
+    margin: 0;
+    padding-top: 0.5em;
+    padding-left: 0.8em;
+    padding-bottom: 0.1em;
+}
+
+#mainAppContainer {
+    padding-left: 20px;
+}
+
+#titleNav {
+    font-weight: 500;
+    font-size: 1.5em;
+}
+
+button {
+    margin-left: 6px;
+    width: 12em;
+    height: 2em;
+}

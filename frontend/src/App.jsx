@@ -204,8 +204,12 @@ export default function App() {
 
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Welcome to JIKAN testing.</h2>
+    <>
+    <nav id="navigationBar">
+      <h2 id="titleNav">JIKAN 時間</h2>
+      <hr></hr>
+    </nav>
+    <div id="mainAppContainer">
 
       {!user ? (
         <>
@@ -334,5 +338,6 @@ export default function App() {
         </div>
       )}
     </div>
+    </>
   );
 }
