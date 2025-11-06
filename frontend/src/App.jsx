@@ -18,6 +18,7 @@ export default function App() {
   const [eventInfo, setEventInfo] = useState("");
   const [teamSettingsEnabled, setTeamSettingsEnabled] = useState(false);
   const [addablePerson, setAddablePerson] = useState("");
+  const [createTeam, setCreateTeam] = useState(false);
 
   // Verify token on app load
   useEffect(() => {
@@ -245,23 +246,30 @@ export default function App() {
               leaveTeam={leaveTeam}
             />
           )}
-
-          <h3>Create a team:</h3>
-          <form onSubmit={handleCreateTeam}>
-            <input
-              type="text"
-              value={customTeam}
-              onChange={(e) => setCustomTeamName(e.target.value)}
-              required
-              placeholder="Enter the name of the new team."
-              id="teamInput"
-            ></input>{" "}
-            <button type="submit">作 Create</button>
-          </form>
+          
 
           <br></br>
 
           <button onClick={doTeamActions}>団動 Team Actions</button>
+          <button>団創 Create a team</button>
+          {setCreateTeam ? (
+            <>
+                        <div id="createTeamSection">
+            <h3>Create a team:</h3>
+            <form onSubmit={handleCreateTeam}>
+              <input
+                type="text"
+                value={customTeam}
+                onChange={(e) => setCustomTeamName(e.target.value)}
+                required
+                placeholder="Enter the name of the new team."
+                id="teamInput"
+              ></input>{" "}
+              <button type="submit">作 Create</button>
+            </form>
+          </div>
+            </>
+          ) : (<></>)}
 
           {teamSettingsEnabled ? (
             <>
