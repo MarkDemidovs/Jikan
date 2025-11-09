@@ -19,6 +19,7 @@ export default function App() {
   const [teamSettingsEnabled, setTeamSettingsEnabled] = useState(false);
   const [addablePerson, setAddablePerson] = useState("");
   const [createTeam, setCreateTeam] = useState(false);
+  const [eventTime, setEventTime] = useState("");
 
   // Verify token on app load
   useEffect(() => {
@@ -279,69 +280,66 @@ export default function App() {
               <h3>Create an event</h3>
               <p>This is based off the team you've currently selected.</p>
 
-              <form onSubmit={handleCreateEvent}>
-                <label htmlFor="titleEvent">Title of event</label>
-                <br></br>
-                <input
-                  type="text"
-                  name="titleEvent"
-                  id="titleEvent"
-                  maxLength="100"
-                  placeholder="(Max 100 characters)"
-                  value={eventTitle}
-                  onChange={(e) => setEventTitle(e.target.value)}
-                  required
-                />
+              <h3>Create an event</h3>
+<p>This is based off the team you've currently selected.</p>
 
-                <br></br>
+<form onSubmit={handleCreateEvent}>
+  <label htmlFor="titleEvent">Title of event</label>
+  <br />
+  <input
+    type="text"
+    name="titleEvent"
+    id="titleEvent"
+    maxLength="100"
+    placeholder="(Max 100 characters)"
+    value={eventTitle}
+    onChange={(e) => setEventTitle(e.target.value)}
+    required
+  />
 
-                <label htmlFor="titleEvent">Date of event</label>
-                <br></br>
-                <input
-                  type="date"
-                  name="titleEvent"
-                  id="titleEvent"
-                  value={eventDate}
-                  onChange={(e) => setEventDate(e.target.value)}
-                  required
-                />
+  <br />
 
-                <br></br>
+  <label htmlFor="eventDate">Date of event</label>
+  <br />
+  <input
+    type="date"
+    name="eventDate"
+    id="eventDate"
+    value={eventDate}
+    onChange={(e) => setEventDate(e.target.value)}
+    required
+  />
 
-                <label htmlFor="event_info">Event Info</label>
-                <br></br>
-                <textarea
-                  id="event_info"
-                  name="event_info"
-                  maxLength="255"
-                  placeholder="Optional description (max 255 characters)"
-                  value={eventInfo}
-                  onChange={(e) => setEventInfo(e.target.value)}
-                ></textarea>
-                <br></br>
-                <br></br>
-                <button type="submit">作事 Create Event</button>
-              </form>
-              <br></br>
-              <hr></hr>
-              <form onSubmit={handleAddToTeam}>
-                <h3>Add person to team</h3>
-                <label htmlFor="personInput" id="personLabel">
-                  The person you submit will be added to the current team you've
-                  selected.
-                </label>{" "}
-                <br></br>
-                <input
-                  type="text"
-                  name="personInput"
-                  id="personInput"
-                  placeholder="Enter the username of the person you want to add."
-                  required
-                  value={addablePerson}
-                  onChange={(e) => setAddablePerson(e.target.value)}
-                />
-                <button onClick={handleAddToTeam}>加人 Add Person</button>
-              </form>
+  <br />
+
+  <label htmlFor="eventTime">Time of event</label>
+  <br />
+  <input
+    type="time"
+    name="eventTime"
+    id="eventTime"
+    value={eventTime}
+    onChange={(e) => setEventTime(e.target.value)}
+    required
+  />
+
+  <br />
+
+  <label htmlFor="event_info">Event Info</label>
+  <br />
+  <textarea
+    id="event_info"
+    name="event_info"
+    maxLength="255"
+    placeholder="Optional description (max 255 characters)"
+    value={eventInfo}
+    onChange={(e) => setEventInfo(e.target.value)}
+  ></textarea>
+
+  <br /><br />
+  <button type="submit">作事 Create Event</button>
+</form>
+
             </>
           ) : (
             <></>
