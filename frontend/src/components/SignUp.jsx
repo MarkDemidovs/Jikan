@@ -24,7 +24,7 @@ export default function SignUp() {
     };
     
     return (
-        <div>
+        <div id='signupDiv'>
             <h2>Sign Up</h2>
             {error && <p style={{ color: "red" }}>{error}</p>}
             {success && <p style={{ color: "green" }}>{success}</p>}

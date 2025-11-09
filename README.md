@@ -76,11 +76,7 @@ Before you begin, ensure you have the following installed:
 - [✅] Extended time range support (from-to hours)
 - [✅] Sanitizing.
 - [✅] Time zone support
-- [ ] Event notifications
 - [ ] Full table reset.
-
-### Future Enhancements
-- [ ] Team calendar view
 
 ## Contributing
 
