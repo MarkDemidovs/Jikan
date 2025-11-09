@@ -58,7 +58,7 @@ export default function TeamEvents({
                 return (
                   <tr key={ev.id}>
                     <td style={{ padding: "8px", borderBottom: "1px solid #f0f0f0" }}>
-                      {parsedDate ? parsedDate.toLocaleDateString() : "Invalid Date"}
+                      {parsedDate ? parsedDate.toLocaleString() : "Invalid Date"}
                     </td>
                     <td style={{ padding: "8px", borderBottom: "1px solid #f0f0f0" }}>{ev.event_name}</td>
                     <td style={{ padding: "8px", borderBottom: "1px solid #f0f0f0" }}>{ev.event_info}</td>
