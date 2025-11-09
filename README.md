@@ -75,10 +75,10 @@ Before you begin, ensure you have the following installed:
 - [✅] Enhanced UI/UX styling
 - [✅] Extended time range support (from-to hours)
 - [✅] Sanitizing.
+- [✅] Time zone support
 - [ ] Full table reset.
 
 ### Future Enhancements
-- [ ] Time zone support
 - [ ] Event notifications
 - [ ] Mobile responsive design
 - [ ] Team calendar view
