@@ -82,7 +82,6 @@ export default function App() {
         const res = await API.get(`/events/${selectedTeamId}`);
         const maybeEvents = res.data.jikans ?? res.data.events ?? [];
         setEvents(maybeEvents);
-
       } catch (err) {
         setError(err.response?.data?.error || "Failed to fetch events");
         setEvents([]);
@@ -126,12 +125,13 @@ export default function App() {
     setError("");
 
     try {
+      const combinedDateTime = `${eventDate}T${eventTime}`;
+
       console.log({ eventTitle, eventDate, eventInfo });
 
-      const isoDate = eventDate; // <-- already in correct format!
 
       await API.post("/events", {
-        event_date: isoDate,
+        event_date: combinedDateTime,
         event_name: eventTitle,
         event_info: eventInfo,
         team_id: selectedTeamId,
@@ -144,6 +144,7 @@ export default function App() {
       setEventTitle("");
       setEventDate("");
       setEventInfo("");
+      setEventTime("");
     } catch (err) {
       setError(err.response?.data?.error || "Failed to Create Event.");
     }
@@ -186,7 +187,7 @@ export default function App() {
     e.preventDefault();
     try {
       await API.delete(`/users/teams/${selectedTeamId}`, {
-        data: { username: user.username }  // <-- Fix: send username in data field
+        data: { username: user.username }, // <-- Fix: send username in data field
       });
 
       // Refresh teams after leaving
@@ -202,151 +203,150 @@ export default function App() {
       console.error("Leave team error:", err);
       setError(err.response?.data?.error || "Failed to leave team.");
     }
-  }
-  
+  };
+
   const doCreateTeam = () => {
     setCreateTeam(!createTeam);
-  }
-
+  };
 
   return (
     <>
-    <nav id="navigationBar">
-      <h2 id="titleNav">JIKAN 時間</h2>
-      <hr></hr>
-    </nav>
-    <div id="mainAppContainer">
+      <nav id="navigationBar">
+        <h2 id="titleNav">JIKAN 時間</h2>
+        <hr></hr>
+      </nav>
+      <div id="mainAppContainer">
+        {!user ? (
+          <>
+            <Login onLogin={setUser} />
+            <SignUp />
+          </>
+        ) : (
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <h2 id="greetingTitle">ようこそ, {user.username}!</h2>
+              <button onClick={handleLogout}>出 Log-out</button>
+            </div>
 
-      {!user ? (
-        <>
-          <Login onLogin={setUser} />
-          <SignUp />
-        </>
-      ) : (
-        <div>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <h2 id="greetingTitle">ようこそ, {user.username}!</h2>
-            <button onClick={handleLogout}>出 Log-out</button>
+            <h3>Here are the events:</h3>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+
+            {loadingTeams ? (
+              <p>Loading teams...</p>
+            ) : teams.length === 0 ? (
+              <p>
+                You are not in any team yet. Create a team or have an admin add
+                you.
+              </p>
+            ) : (
+              <TeamEvents
+                teams={teams}
+                selectedTeamId={selectedTeamId}
+                onSelectTeam={setSelectedTeamId}
+                events={events}
+                loadingEvents={loadingEvents}
+                onDeleteEvent={handleDeleteEvent}
+                leaveTeam={leaveTeam}
+              />
+            )}
+
+            <br></br>
+
+            <button onClick={doTeamActions}>団動 Team Actions</button>
+            <button onClick={doCreateTeam}>団創 Create a team</button>
+            {createTeam ? (
+              <>
+                <div id="createTeamSection">
+                  <h3>Create a team:</h3>
+                  <form onSubmit={handleCreateTeam}>
+                    <input
+                      type="text"
+                      value={customTeam}
+                      onChange={(e) => setCustomTeamName(e.target.value)}
+                      required
+                      placeholder="Enter the name of the new team."
+                      id="teamInput"
+                    ></input>{" "}
+                    <button type="submit">作 Create</button>
+                  </form>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+
+            {teamSettingsEnabled ? (
+              <>
+                <h3>Create an event</h3>
+                <p>This is based off the team you've currently selected.</p>
+
+                <h3>Create an event</h3>
+                <p>This is based off the team you've currently selected.</p>
+
+                <form onSubmit={handleCreateEvent}>
+                  <label htmlFor="titleEvent">Title of event</label>
+                  <br />
+                  <input
+                    type="text"
+                    name="titleEvent"
+                    id="titleEvent"
+                    maxLength="100"
+                    placeholder="(Max 100 characters)"
+                    value={eventTitle}
+                    onChange={(e) => setEventTitle(e.target.value)}
+                    required
+                  />
+
+                  <br />
+
+                  <label htmlFor="eventDate">Date of event</label>
+                  <br />
+                  <input
+                    type="date"
+                    name="eventDate"
+                    id="eventDate"
+                    value={eventDate}
+                    onChange={(e) => setEventDate(e.target.value)}
+                    required
+                  />
+
+                  <br />
+
+                  <label htmlFor="eventTime">Time of event</label>
+                  <br />
+                  <input
+                    type="time"
+                    name="eventTime"
+                    id="eventTime"
+                    value={eventTime}
+                    onChange={(e) => setEventTime(e.target.value)}
+                    required
+                  />
+
+                  <br />
+
+                  <label htmlFor="event_info">Event Info</label>
+                  <br />
+                  <textarea
+                    id="event_info"
+                    name="event_info"
+                    maxLength="255"
+                    placeholder="Optional description (max 255 characters)"
+                    value={eventInfo}
+                    onChange={(e) => setEventInfo(e.target.value)}
+                  ></textarea>
+
+                  <br />
+                  <br />
+                  <button type="submit">作事 Create Event</button>
+                </form>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
-
-          <h3>Here are the events:</h3>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-
-          {loadingTeams ? (
-            <p>Loading teams...</p>
-          ) : teams.length === 0 ? (
-            <p>
-              You are not in any team yet. Create a team or have an admin add
-              you.
-            </p>
-          ) : (
-            <TeamEvents
-              teams={teams}
-              selectedTeamId={selectedTeamId}
-              onSelectTeam={setSelectedTeamId}
-              events={events}
-              loadingEvents={loadingEvents}
-              onDeleteEvent={handleDeleteEvent}
-              leaveTeam={leaveTeam}
-            />
-          )}
-          
-
-          <br></br>
-
-          <button onClick={doTeamActions}>団動 Team Actions</button>
-          <button onClick={doCreateTeam}>団創 Create a team</button>
-          {createTeam ? (
-            <>
-                        <div id="createTeamSection">
-            <h3>Create a team:</h3>
-            <form onSubmit={handleCreateTeam}>
-              <input
-                type="text"
-                value={customTeam}
-                onChange={(e) => setCustomTeamName(e.target.value)}
-                required
-                placeholder="Enter the name of the new team."
-                id="teamInput"
-              ></input>{" "}
-              <button type="submit">作 Create</button>
-            </form>
-          </div>
-            </>
-          ) : (<></>)}
-
-          {teamSettingsEnabled ? (
-            <>
-              <h3>Create an event</h3>
-              <p>This is based off the team you've currently selected.</p>
-
-              <h3>Create an event</h3>
-<p>This is based off the team you've currently selected.</p>
-
-<form onSubmit={handleCreateEvent}>
-  <label htmlFor="titleEvent">Title of event</label>
-  <br />
-  <input
-    type="text"
-    name="titleEvent"
-    id="titleEvent"
-    maxLength="100"
-    placeholder="(Max 100 characters)"
-    value={eventTitle}
-    onChange={(e) => setEventTitle(e.target.value)}
-    required
-  />
-
-  <br />
-
-  <label htmlFor="eventDate">Date of event</label>
-  <br />
-  <input
-    type="date"
-    name="eventDate"
-    id="eventDate"
-    value={eventDate}
-    onChange={(e) => setEventDate(e.target.value)}
-    required
-  />
-
-  <br />
-
-  <label htmlFor="eventTime">Time of event</label>
-  <br />
-  <input
-    type="time"
-    name="eventTime"
-    id="eventTime"
-    value={eventTime}
-    onChange={(e) => setEventTime(e.target.value)}
-    required
-  />
-
-  <br />
-
-  <label htmlFor="event_info">Event Info</label>
-  <br />
-  <textarea
-    id="event_info"
-    name="event_info"
-    maxLength="255"
-    placeholder="Optional description (max 255 characters)"
-    value={eventInfo}
-    onChange={(e) => setEventInfo(e.target.value)}
-  ></textarea>
-
-  <br /><br />
-  <button type="submit">作事 Create Event</button>
-</form>
-
-            </>
-          ) : (
-            <></>
-          )}
-        </div>
-      )}
-    </div>
+        )}
+      </div>
     </>
   );
 }
