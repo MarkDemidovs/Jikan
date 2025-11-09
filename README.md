@@ -73,7 +73,7 @@ Before you begin, ensure you have the following installed:
 - [✅] Team exit functionality
 - [✅] Enhanced Textual Styling
 - [✅] Enhanced UI/UX styling
-- [ ] Extended time range support (from-to hours)
+- [✅] Extended time range support (from-to hours)
 - [ ] Sanitizing.
 - [ ] Full table reset.
 
